@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using PolicySearchService.Api.Queries;
 using PolicySearchService.Api.Queries.Dtos;
 using PolicySearchService.Domain;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PolicySearchService.Queries;
 
@@ -25,19 +25,19 @@ public class FindPolicyHandler : IRequestHandler<FindPolicyQuery, FindPolicyResu
         return FindPolicyResult(searchResults);
     }
 
-    private FindPolicyResult FindPolicyResult(List<Policy> searchResults)
+    private static FindPolicyResult FindPolicyResult(List<Policy> searchResults)
     {
         return new FindPolicyResult
         {
             Policies = searchResults.Select(p => new PolicyDto
-                {
-                    PolicyNumber = p.PolicyNumber,
-                    PolicyStartDate = p.PolicyStartDate,
-                    PolicyEndDate = p.PolicyEndDate,
-                    ProductCode = p.ProductCode,
-                    PolicyHolder = p.PolicyHolder,
-                    PremiumAmount = p.PremiumAmount
-                })
+            {
+                PolicyNumber = p.PolicyNumber,
+                PolicyStartDate = p.PolicyStartDate,
+                PolicyEndDate = p.PolicyEndDate,
+                ProductCode = p.ProductCode,
+                PolicyHolder = p.PolicyHolder,
+                PremiumAmount = p.PremiumAmount
+            })
                 .ToList()
         };
     }

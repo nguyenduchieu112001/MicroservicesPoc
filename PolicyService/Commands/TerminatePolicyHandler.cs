@@ -1,11 +1,11 @@
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PolicyService.Api.Commands;
 using PolicyService.Api.Commands.Dtos;
 using PolicyService.Api.Events;
 using PolicyService.Domain;
 using PolicyService.Messaging;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PolicyService.Commands;
 
@@ -37,7 +37,7 @@ public class TerminatePolicyHandler : IRequestHandler<TerminatePolicyCommand, Te
         };
     }
 
-    private PolicyTerminated PolicyTerminated(PolicyTerminationResult terminationResult)
+    private static PolicyTerminated PolicyTerminated(PolicyTerminationResult terminationResult)
     {
         return new PolicyTerminated
         {
