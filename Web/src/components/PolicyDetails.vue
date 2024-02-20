@@ -21,7 +21,7 @@
         <span><strong>Product code:</strong> {{ policy.productCode }}</span>
       </div>
       <div class="row">
-        <span><strong>Account number:</strong> {{ policyAccountNumber }}</span>
+        <span><strong>Account number:</strong> {{ policyAccountNumber || "Not have account" }}</span>
       </div>
       <div class="row">
         <span><strong>Covers:</strong> {{ policy.covers | join }}</span>

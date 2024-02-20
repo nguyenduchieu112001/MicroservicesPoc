@@ -9,34 +9,25 @@
       </b-form>
     </div>
 
-    <b-table bordered striped hover
-             :items="policies"
-             :fields="fields"
-             @row-clicked="showDetails"
-             show-empty
-             :empty-text="rowEmpty">
-      <template #empty="scope">
-        {{ rowEmpty }}
-      </template>
-    </b-table>
+    <PolicyTable
+      :policies="policies"
+      :rowEmpty="rowEmpty"
+    />
+
   </div>
 </template>
 
 <script>
 import moment from "moment";
 import { HTTP } from "./http/ApiClient";
+import PolicyTable from "./PolicyTable.vue";
 const AND = "%20AND%20";
 
 export default {
   name: "PolicyList",
+  components: { PolicyTable },
   data() {
     return {
-      fields: [
-        { key: "policyNumber" },
-        { key: "policyStartDate" },
-        { key: "policyEndDate" },
-        { key: "policyHolder" },
-      ],
       policies: [],
       filterFields: {
         policyHolder: "",
@@ -46,16 +37,10 @@ export default {
         "Please input your Policy Number or Policy Holder to Search Policies",
     };
   },
-  created: function() {
-    this.runSearch();
-  },
+  // created: function() {
+  //   this.runSearch();
+  // },
   methods: {
-    showDetails(record) {
-      this.$router.push({
-        name: "policyDetails",
-        params: { policyNumber: record.policyNumber },
-      });
-    },
     search() {
       let queryString = "";
       queryString = this.addCriteria(

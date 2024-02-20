@@ -1,14 +1,21 @@
 <template>
   <div>
     <b-card
-      :title="`${product.name} (${product.code})`"
+      :title="userTypes.includes('ADMIN') ? `${product.name} (${product.code})` : `${product.name}`"
+      img-top
       :img-src="imageSrc"
       :img-alt="product.name"
-      img-top
       tag="article"
     >
-      <p class="card-text">
+      <!-- <img
+        :src="imageSrc"
+        :alt="product.name"
+        style="width: 100%; height: 150px;"
+      /> -->
+      <i class="card-text">
         {{ product.description }}
+      </i>
+      <p class="card-text">
         <CoverList :covers="product.covers" />
       </p>
       <b-row>
@@ -63,7 +70,6 @@ import CoverList from "./CoverList";
 import ProductUpdate from "./ProductUpdate.vue";
 import { HTTP } from "./http/ApiClient";
 import { product } from "./ProductCreate.vue";
-import { DETAILS_USER } from "./http/Auth";
 
 export default {
   name: "ProductCard",
@@ -71,6 +77,7 @@ export default {
   props: {
     product: {},
     image: "",
+    userTypes: null,
   },
   data() {
     return {
@@ -79,7 +86,6 @@ export default {
       selectedProduct: "",
       updateProduct: product,
       productImage: null,
-      userTypes: [],
     };
   },
   async created() {
@@ -93,9 +99,6 @@ export default {
     const imageUrl = URL.createObjectURL(blob);
 
     this.imageSrc = imageUrl;
-
-    const user = localStorage.getItem(DETAILS_USER);
-    this.userTypes = JSON.parse(user).userTypes;
   },
   methods: {
     async uploadImage() {

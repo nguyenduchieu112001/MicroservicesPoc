@@ -22,11 +22,12 @@
       <div
         v-for="product in products"
         :key="product.code"
-        class="col-md-3"
+        class="col-md-4 mb-5"
       >
         <ProductCard
           :product="product"
           :image="product.image"
+          :userTypes="userTypes"
         />
       </div>
     </div>
