@@ -41,9 +41,9 @@ public class PolicyRepository : IPolicyRepository
         return result.Documents.ToList() ?? new List<Policy>();
     }
 
-    public async Task Delete(Policy policy)
+    public async Task Delete(string policyNumber)
     {
-        var hits = await GetIdAsync(policy.PolicyNumber);
+        var hits = await GetIdAsync(policyNumber);
         foreach (var hit in hits)
             await elasticClient.DeleteAsync<Policy>(hit.Id);
     }

@@ -17,8 +17,6 @@ public class PolicyDeletedHandler : INotificationHandler<PolicyTerminated>
 
     public async Task Handle(PolicyTerminated notification, CancellationToken cancellationToken)
     {
-        var policies = await policis.Find(notification.PolicyNumber);
-        foreach (var policy in policies)
-            await policis.Delete(policy);
+        await policis.Delete(notification.PolicyNumber);
     }
 }
