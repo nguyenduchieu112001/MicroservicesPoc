@@ -1,4 +1,5 @@
 ﻿using Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch.Core.Search;
 using Elastic.Clients.Elasticsearch.QueryDsl;
 using PolicySearchService.Domain;
 using System.Collections.Generic;
@@ -38,5 +39,30 @@ public class PolicyRepository : IPolicyRepository
                         ));
 
         return result.Documents.ToList() ?? new List<Policy>();
+    }
+
+    public async Task Delete(Policy policy)
+    {
+        var hits = await GetIdAsync(policy.PolicyNumber);
+        foreach (var hit in hits)
+            await elasticClient.DeleteAsync<Policy>(hit.Id);
+    }
+
+    private async Task<List<Hit<Policy>>> GetIdAsync(string policyNumber)
+    {
+        var result = await elasticClient
+            .SearchAsync<Policy>(
+                s =>
+                    s.From(0)
+                        .Size(10)
+                        .Query(q =>
+                            q.MultiMatch(mm =>
+                                mm.Query(policyNumber)
+                                    .Fields(Infer.Fields<Policy>(p => p.PolicyNumber, p => p.PolicyHolder))
+                                    .Type(TextQueryType.BestFields)
+                                    .Fuzziness(new Fuzziness("AUTO"))
+                            )
+                        ));
+        return result.Hits.ToList();
     }
 }

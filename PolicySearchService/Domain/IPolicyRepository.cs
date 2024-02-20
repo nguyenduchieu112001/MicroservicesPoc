@@ -7,5 +7,7 @@ public interface IPolicyRepository
 {
     Task Add(Policy policy);
 
+    Task Delete(Policy policy);
+
     Task<List<Policy>> Find(string queryText);
 }

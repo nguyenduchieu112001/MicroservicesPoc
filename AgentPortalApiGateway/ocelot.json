@@ -55,6 +55,25 @@
       }
     },
     {
+      "DownstreamPathTemplate": "/api/Policy/terminate",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/api/Policy/terminate",
+      "ServiceName": "PolicyService",
+      "UpstreamHttpMethod": [
+        "DELETE"
+      ],
+      "FileCacheOptions": {
+        "TtlSeconds": 15
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "ApiSecurity",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "userType": "SALESMAN"
+      }
+    },
+    {
       "DownstreamPathTemplate": "/api/Payment/accounts/{everything}",
       "DownstreamScheme": "http",
       "UpstreamPathTemplate": "/api/Payment/accounts/{everything}",

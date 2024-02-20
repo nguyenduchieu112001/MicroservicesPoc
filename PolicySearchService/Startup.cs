@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +7,8 @@ using PolicySearchService.DataAccess.ElasticSearch;
 using PolicySearchService.Messaging.RabbitMq;
 using PolicyService.Api.Events;
 using Steeltoe.Discovery.Client;
+using System;
+using System.Collections.Generic;
 
 namespace PolicySearchService;
 
@@ -47,9 +47,9 @@ public class Startup
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-        
+
         app.UseHttpsRedirection();
-        app.UseRabbitListeners(new List<Type> { typeof(PolicyCreated) });
+        app.UseRabbitListeners(new List<Type> { typeof(PolicyCreated), typeof(PolicyTerminated) });
         app.UseEndpoints(endpoints => endpoints.MapControllers());
     }
 }
