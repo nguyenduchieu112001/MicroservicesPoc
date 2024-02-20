@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PolicyService.Api.Commands;
 using PolicyService.Api.Queries;
+using System.Threading.Tasks;
 
 namespace PolicyService.Controllers;
 
@@ -34,7 +34,7 @@ public class PolicyController : ControllerBase
     }
 
     // DELETE
-    [HttpDelete("/terminate")]
+    [HttpDelete("terminate")]
     public async Task<ActionResult> Post([FromBody] TerminatePolicyCommand cmd)
     {
         var result = await bus.Send(cmd);
