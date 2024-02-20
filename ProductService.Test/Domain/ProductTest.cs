@@ -1,8 +1,8 @@
+using ProductService.Domain;
+using ProductService.Test.TestData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ProductService.Domain;
-using ProductService.Test.TestData;
 using Xunit;
 
 namespace ProductService.Test.Domain;
@@ -28,7 +28,7 @@ public class ProductTest
     {
         var product = Product.CreateDraft(code, name, image, description, maxNumberOfInsured, icon);
 
-        Assert.NotEqual(Guid.Empty, product.Id);
+        Assert.NotEqual(0, product.Id);
         Assert.NotNull(product.Questions);
         Assert.Empty(product.Questions);
         Assert.NotNull(product.Covers);
@@ -46,7 +46,7 @@ public class ProductTest
 
         Assert.NotEmpty(product.Covers);
         Assert.Single(product.Covers);
-        Assert.NotEqual(Guid.Empty, product.Covers.First().Id);
+        Assert.NotEqual(0, product.Covers.First().Id);
     }
 
     [Fact]
@@ -65,7 +65,7 @@ public class ProductTest
 
         Assert.NotEmpty(product.Questions);
         Assert.Equal(testQuestions.Count, product.Questions.Count);
-        Assert.All(product.Questions, item => Assert.NotEqual(Guid.Empty, item.Id));
+        Assert.All(product.Questions, item => Assert.NotEqual(0, item.Id));
     }
 
     [Fact]

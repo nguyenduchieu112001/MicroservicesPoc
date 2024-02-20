@@ -6,7 +6,7 @@ internal static class TariffFactory
 {
     internal static Tariff Travel()
     {
-        var travel = new Tariff("TRI");
+        var travel = Tariff.CreateTariff("TRI");
         travel.BasePremiumRules.AddBasePriceRule("C1", null,
             "(NUM_OF_ADULTS) * (DESTINATION == \"EUR\" ? 26.00M : 34.00M)");
         travel.BasePremiumRules.AddBasePriceRule("C2", null, "(NUM_OF_ADULTS + NUM_OF_CHILDREN) * 26.00M");
@@ -19,7 +19,7 @@ internal static class TariffFactory
 
     internal static Tariff House()
     {
-        var house = new Tariff("HSI");
+        var house = Tariff.CreateTariff("HSI");
 
         house.BasePremiumRules.AddBasePriceRule("C1", "TYP == \"APT\"", "AREA * 1.25M");
         house.BasePremiumRules.AddBasePriceRule("C1", "TYP == \"HOUSE\"", "AREA * 1.50M");
@@ -38,7 +38,7 @@ internal static class TariffFactory
 
     internal static Tariff Farm()
     {
-        var farm = new Tariff("FAI");
+        var farm = Tariff.CreateTariff("FAI");
 
         farm.BasePremiumRules.AddBasePriceRule("C1", null, "10M");
         farm.BasePremiumRules.AddBasePriceRule("C2", null, "20M");
@@ -53,7 +53,7 @@ internal static class TariffFactory
 
     internal static Tariff Car()
     {
-        var car = new Tariff("CAR");
+        var car = Tariff.CreateTariff("CAR");
 
         car.BasePremiumRules.AddBasePriceRule("C1", null, "100M");
         car.DiscountMarkupRules.AddPercentMarkup("NUM_OF_CLAIM > 2", 1.50M);
