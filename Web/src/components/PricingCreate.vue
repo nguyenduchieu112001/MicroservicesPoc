@@ -146,7 +146,7 @@
                     </b-form-text>
                     <b-form-text id="formulaInBasePremium">
                       2. If your formula has a questionCode of choice, it must have comparison properties (==, !=) 
-                      with the code of choice placed next to the symbol i (usually an abbreviation).
+                      with the code of choice placed next to the symbol "i" (usually an abbreviation).
                     </b-form-text>
                   </b-form-group>
                 </b-col>
@@ -170,8 +170,9 @@
                       1. If the Base premium formual is numeric, it must have M at the end of the number (for example, 0.2M).
                     </b-form-text>
                     <b-form-text id="formulaInBasePremium">
-                      2. If the base premium formula is a formula, it must contain at least one questionCode 
-                      and must ensure that the number in the formula must satisfy condition 1 (for example: AREA * 0.2M)
+                      2. If the base premium formula is a formula, it must contain at least one questionCode of type number
+                      (The number code should not be placed next to the symbol "i") and must ensure that the number in the formula satisfies 
+                      condition 1 (for example: AREA * 0.2M)
                     </b-form-text>
                   </b-form-group>
                 </b-col>
@@ -229,7 +230,7 @@
 
                     <b-form-text id="formulaInDiscount">
                       2. If your formula has a questionCode of choice, it must have comparison properties (==, !=) 
-                      with the code of choice placed next to the symbol i (usually an abbreviation).
+                      with the code of choice placed next to the symbol "i" (usually an abbreviation).
                     </b-form-text>
                   </b-form-group>
                 </b-col>
@@ -425,8 +426,10 @@ export default {
       const codeExpressionPattern = /^(\(.*\)|\w+)\s*([+\-*/])\s*\d+(\.\d+)?M(\s*([+\-*/])\s*\d+(\.\d+)?M)*$/;
 
       // Check if the formula includes any of the valid keywords
-      const isValidKeyword = validKeywords.some((keyword) =>
-        formula.includes(keyword.questionCode)
+      const isValidKeyword = validKeywords.some(
+        (keyword) =>
+          formula.includes(keyword.questionCode) &&
+          keyword.questionType === "Numeric"
       );
 
       const insValidNumber = numberPattern.test(formula);
