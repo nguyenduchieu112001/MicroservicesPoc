@@ -115,6 +115,6 @@ public class Startup
             endpoints.MapHub<AgentChatHub>("/agentsChat");
         });
 
-        app.UseRabbitListeners(new List<Type> { typeof(PolicyCreated) });
+        app.UseRabbitListeners(new List<Type> { typeof(PolicyCreated), typeof(PolicyTerminated) });
     }
 }
