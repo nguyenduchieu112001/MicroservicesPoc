@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PaymentService.Api.Queries;
-using PolicyService.Api.Events;
 using System.Threading.Tasks;
 
 namespace PaymentService.Controllers;
@@ -24,10 +23,10 @@ public class PaymentController : ControllerBase
         return new JsonResult(result);
     }
 
-    [HttpPost("accounts/create")]
-    public async Task<ActionResult> PolicyCreated([FromBody] PolicyCreated policy)
-    {
-        await bus.Publish(policy);
-        return Ok("Policy created successfully.");
-    }
+    //[HttpPost("accounts/create")]
+    //public async Task<ActionResult> PolicyCreated([FromBody] PolicyCreated policy)
+    //{
+    //    await bus.Publish(policy);
+    //    return Ok("Policy created successfully.");
+    //}
 }

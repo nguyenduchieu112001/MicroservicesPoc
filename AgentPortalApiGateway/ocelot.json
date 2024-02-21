@@ -89,22 +89,22 @@
         "userType": "SALESMAN"
       }
     },
-    {
-      "DownstreamPathTemplate": "/api/Payment/accounts/create",
-      "DownstreamScheme": "http",
-      "UpstreamPathTemplate": "/api/Payment/accounts/create",
-      "ServiceName": "PaymentService",
-      "UpstreamHttpMethod": [
-        "POST"
-      ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "ApiSecurity",
-        "AllowedScopes": []
-      },
-      "RouteClaimsRequirement": {
-        "userType": "SALESMAN"
-      }
-    },
+    //{
+    //  "DownstreamPathTemplate": "/api/Payment/accounts/create",
+    //  "DownstreamScheme": "http",
+    //  "UpstreamPathTemplate": "/api/Payment/accounts/create",
+    //  "ServiceName": "PaymentService",
+    //  "UpstreamHttpMethod": [
+    //    "POST"
+    //  ],
+    //  "AuthenticationOptions": {
+    //    "AuthenticationProviderKey": "ApiSecurity",
+    //    "AllowedScopes": []
+    //  },
+    //  "RouteClaimsRequirement": {
+    //    "userType": "SALESMAN"
+    //  }
+    //},
     {
       "DownstreamPathTemplate": "/api/Products/{everything}",
       "DownstreamScheme": "http",
