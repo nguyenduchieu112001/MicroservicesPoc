@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace PolicySearchService.Listeners;
 
-public class PolicyDeletedHandler : INotificationHandler<PolicyTerminated>
+public class PolicyTerminatedHandler : INotificationHandler<PolicyTerminated>
 {
     private readonly IPolicyRepository policis;
 
-    public PolicyDeletedHandler(IPolicyRepository policis)
+    public PolicyTerminatedHandler(IPolicyRepository policis)
     {
         this.policis = policis;
     }
