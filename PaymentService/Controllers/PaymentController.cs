@@ -29,4 +29,11 @@ public class PaymentController : ControllerBase
     //    await bus.Publish(policy);
     //    return Ok("Policy created successfully.");
     //}
+
+    //[HttpPost("accounts/terminate")]
+    //public async Task<ActionResult> PolicyTerminated([FromBody] PolicyTerminated policy)
+    //{
+    //    await bus.Publish(policy);
+    //    return Ok("Policy terminated successfully.");
+    //}
 }

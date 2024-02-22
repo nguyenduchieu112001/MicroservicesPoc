@@ -105,6 +105,22 @@
     //    "userType": "SALESMAN"
     //  }
     //},
+    //{
+    //  "DownstreamPathTemplate": "/api/Payment/accounts/terminate",
+    //  "DownstreamScheme": "http",
+    //  "UpstreamPathTemplate": "/api/Payment/accounts/terminate",
+    //  "ServiceName": "PaymentService",
+    //  "UpstreamHttpMethod": [
+    //    "POST"
+    //  ],
+    //  "AuthenticationOptions": {
+    //    "AuthenticationProviderKey": "ApiSecurity",
+    //    "AllowedScopes": []
+    //  },
+    //  "RouteClaimsRequirement": {
+    //    "userType": "SALESMAN"
+    //  }
+    //},
     {
       "DownstreamPathTemplate": "/api/Products/{everything}",
       "DownstreamScheme": "http",
