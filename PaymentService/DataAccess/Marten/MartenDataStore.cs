@@ -1,7 +1,7 @@
-using System;
-using System.Threading.Tasks;
 using Marten;
 using PaymentService.Domain;
+using System;
+using System.Threading.Tasks;
 
 namespace PaymentService.DataAccess.Marten;
 

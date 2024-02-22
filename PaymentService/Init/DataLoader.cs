@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using PaymentService.Domain;
+﻿using PaymentService.Domain;
+using System.Threading.Tasks;
 
 namespace PaymentService.Init;
 

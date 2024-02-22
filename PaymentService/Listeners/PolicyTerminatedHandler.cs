@@ -1,8 +1,8 @@
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PaymentService.Domain;
 using PolicyService.Api.Events;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PaymentService.Listeners;
 
@@ -21,8 +21,10 @@ public class PolicyTerminatedHandler : INotificationHandler<PolicyTerminated>
 
         policyAccount.Close(notification.PolicyTo, notification.AmountToReturn);
 
+
         dataStore.PolicyAccounts.Update(policyAccount);
 
         await dataStore.CommitChanges();
+
     }
 }
