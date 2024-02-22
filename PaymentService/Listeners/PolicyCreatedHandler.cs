@@ -1,8 +1,8 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using PaymentService.Domain;
 using PolicyService.Api.Events;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PaymentService.Listeners;
 
@@ -29,9 +29,6 @@ public class PolicyCreatedHandler : INotificationHandler<PolicyCreated>
 
         using (dataStore)
         {
-            if (await dataStore.PolicyAccounts.ExistsWithPolicyNumber(notification.PolicyNumber))
-                return;
-
             dataStore.PolicyAccounts.Add(policy);
             await dataStore.CommitChanges();
         }

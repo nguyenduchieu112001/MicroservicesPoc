@@ -154,9 +154,9 @@ export default {
         .then((response) => {
           this.policyNumber = response.data.policyNumber;
         })
-        .then(() => {
-          this.createPayment();
-        })
+        // .then(() => {
+        //   this.createPayment();
+        // })
         .then(() => {
           this.$router.push({
             name: "policyDetails",
@@ -165,18 +165,18 @@ export default {
         });
     },
 
-    createPayment() {
-      const account_payment = {
-        policyNumber: this.policyNumber,
-        productCode: this.productCode,
-        policyFrom: this.policyFrom,
-        policyTo: this.policyTo,
-        policyHolder: this.policyHolder,
-        totalPremium: this.totalPremium,
-        agentLogin: this.agent,
-      };
-      HTTP.post("Payment/accounts/create", account_payment);
-    },
+    // createPayment() {
+    //   const account_payment = {
+    //     policyNumber: this.policyNumber,
+    //     productCode: this.productCode,
+    //     policyFrom: this.policyFrom,
+    //     policyTo: this.policyTo,
+    //     policyHolder: this.policyHolder,
+    //     totalPremium: this.totalPremium,
+    //     agentLogin: this.agent,
+    //   };
+    //   HTTP.post("Payment/accounts/create", account_payment);
+    // },
   },
 };
 </script>
