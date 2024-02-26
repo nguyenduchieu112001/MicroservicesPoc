@@ -21,10 +21,11 @@ public class PolicyTerminatedHandler : INotificationHandler<PolicyTerminated>
 
         policyAccount.Close(notification.PolicyTo, notification.AmountToReturn);
 
+        using (dataStore)
+        {
+            dataStore.PolicyAccounts.Update(policyAccount);
 
-        dataStore.PolicyAccounts.Update(policyAccount);
-
-        await dataStore.CommitChanges();
-
+            await dataStore.CommitChanges();
+        }
     }
 }
