@@ -3,7 +3,7 @@
     <b-form
       ref="findCodeForm"
       :model="code"
-      @submit.stop.prevent="handleCodeSubmit"
+      @submit.stop.prevent="handleCreateUpdate('create')"
     >
       <b-row>
         <b-col md="8">
@@ -30,7 +30,7 @@
             variant="outline-primary"
             block
             pill
-            @click="handleCodeSubmit()"
+            @click="handleCreateUpdate('create')"
           >
             <i class="bi bi-plus-lg" />
           </b-button>
@@ -43,7 +43,7 @@
             variant="info"
             pill
             block
-            @click="handleUpdate()"
+            @click="handleCreateUpdate('update')"
           >
             <i class="bi bi-pencil-square" />
           </b-button>
@@ -304,33 +304,101 @@ export default {
         discountMarkupRules: [discountMarkupRules],
       },
       mode: "",
+      action: "",
     };
   },
   methods: {
-    async handleCodeSubmit() {
+    handleCreateUpdateResponse(response) {
+      this.covers = response.data.covers;
+      this.questions = response.data.questions;
+      this.num_of_covers = this.covers.length;
+      this.CreateCalculatePrice = {
+        code: "",
+        basePremiumCalculationRules: [basePremiumCalculationRules],
+        discountMarkupRules: [discountMarkupRules],
+      };
+    },
+    async handleCreateUpdate(action) {
       if (this.code === "") {
         this.covers = [];
         this.questions = [];
         return;
       }
-      await HTTP.get("products/" + this.code).then((response) => {
-        if (response.data === null) {
-          setTimeout(() => {
-            alert(`"Not found with code ${this.code}"`);
-          }, 100);
-        } else {
-          this.covers = response.data.covers;
-          this.questions = response.data.questions;
-          this.num_of_covers = this.covers.length;
-          this.CreateCalculatePrice = {
-            code: "",
-            basePremiumCalculationRules: [basePremiumCalculationRules],
-            discountMarkupRules: [discountMarkupRules],
-          };
-          this.mode = "CREATE";
+      const responseProduct = await HTTP.get("products/" + this.code);
+      switch (action) {
+        case "create": {
+          if (responseProduct.data === null) {
+            setTimeout(() => {
+              alert(`"Not found with code ${this.code}"`);
+            }, 100);
+            return;
+          }
+          if (responseProduct.data.name !== null) {
+            alert(
+              `Code '${this.code}' already exists. Cannot create a new one.`
+            );
+            return;
+          } else {
+            this.handleCreateUpdateResponse(responseProduct);
+            this.mode = "CREATE";
+          }
+          break;
         }
-      });
+        case "update": {
+          await HTTP.get("Pricing/" + this.code.toUpperCase()).then(
+            async (response) => {
+              if (response.data === null) {
+                alert(`"Not found with code ${this.code.toUpperCase()}"`);
+                return;
+              } else {
+                this.handleCreateUpdateResponse(responseProduct);
+                this.CreateCalculatePrice = response.data;
+                this.mode = "UPDATE";
+              }
+            }
+          );
+          break;
+        }
+      }
     },
+    // async handleCodeSubmit() {
+    //   if (this.code === "") {
+    //     this.covers = [];
+    //     this.questions = [];
+    //     return;
+    //   }
+    //   await HTTP.get("products/" + this.code).then((response) => {
+    //     if (response.data === null) {
+    //       setTimeout(() => {
+    //         alert(`"Not found with code ${this.code}"`);
+    //       }, 100);
+    //     } else {
+    //       this.covers = response.data.covers;
+    //       this.questions = response.data.questions;
+    //       this.num_of_covers = this.covers.length;
+    //       this.CreateCalculatePrice = {
+    //         code: "",
+    //         basePremiumCalculationRules: [basePremiumCalculationRules],
+    //         discountMarkupRules: [discountMarkupRules],
+    //       };
+    //       this.mode = "CREATE";
+    //     }
+    //   });
+    // },
+    // async handleUpdate() {
+    //   await HTTP.get("Pricing/" + this.code.toUpperCase()).then(
+    //     async (response) => {
+    //       if (response.data === null) {
+    //         alert(`"Not found with code ${this.code.toUpperCase()}"`);
+    //         return;
+    //       } else {
+    //         await this.handleCodeSubmit();
+    //         this.CreateCalculatePrice = response.data;
+    //         this.mode = "UPDATE";
+    //       }
+    //     }
+    //   );
+    // },
     isValidCoverCode(index) {
       const coverCodePattern = new RegExp(`^C[1-${this.num_of_covers}]$`);
       const coverCode = this.CreateCalculatePrice.basePremiumCalculationRules[
@@ -477,20 +545,6 @@ export default {
           });
         }
       });
-    },
-    async handleUpdate() {
-      await HTTP.get("Pricing/" + this.code.toUpperCase()).then(
-        async (response) => {
-          if (response.data === null) {
-            alert(`"Not found with code ${this.code.toUpperCase()}"`);
-            return;
-          } else {
-            await this.handleCodeSubmit();
-            this.CreateCalculatePrice = response.data;
-            this.mode = "UPDATE";
-          }
-        }
-      );
     },
     async checkValid() {
       const isValidForm = await new Promise((resolve) => {
