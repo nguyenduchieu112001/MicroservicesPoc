@@ -3,7 +3,7 @@
   "profiles": {
     "PolicySearchService": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "swagger/index.html",
       "applicationUrl": "http://localhost:5065",
       "environmentVariables": {

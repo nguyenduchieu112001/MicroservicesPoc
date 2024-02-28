@@ -1,7 +1,7 @@
-using System;
-using System.Linq;
 using DashboardService.Domain;
 using Elastic.Clients.Elasticsearch;
+using System;
+using System.Linq;
 
 namespace DashboardService.DataAccess.Elastic;
 
@@ -22,7 +22,7 @@ public class ElasticPolicyRepository : IPolicyRepository
             i => i
                 .Index("policy_lab_stats")
                 .Id(policy.Number)
-                .Refresh(Refresh.True)
+        //.Refresh(Refresh.True)
         );
 
         if (!response.IsValidResponse) throw new ApplicationException("Failed to index a policy document");

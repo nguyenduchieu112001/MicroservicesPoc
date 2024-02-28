@@ -3,7 +3,7 @@
   "profiles": {
     "AuthService": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "swagger",
       "applicationUrl": "http://localhost:6060",
       "environmentVariables": {

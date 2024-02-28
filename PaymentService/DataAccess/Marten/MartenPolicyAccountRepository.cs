@@ -1,5 +1,6 @@
 using Marten;
 using PaymentService.Domain;
+using System;
 using System.Threading.Tasks;
 
 namespace PaymentService.DataAccess.Marten;
@@ -15,12 +16,27 @@ public class MartenPolicyAccountRepository : IPolicyAccountRepository
 
     public void Add(PolicyAccount policyAccount)
     {
-        documentSession.Insert(policyAccount);
+        try
+        {
+            documentSession.Insert(policyAccount);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
     }
 
     public void Update(PolicyAccount policyAccount)
     {
-        documentSession.Update(policyAccount);
+        //documentSession.Update(policyAccount);
+        try
+        {
+            documentSession.Update(policyAccount);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
     }
 
     public async Task<PolicyAccount> FindByNumber(string policyNumber)

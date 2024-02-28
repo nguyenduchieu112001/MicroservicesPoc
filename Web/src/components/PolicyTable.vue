@@ -102,7 +102,7 @@ export default {
       });
       this.$bvModal.hide("DeletePolicy");
       this.selectedPolicy = null;
-      window.location.reload();
+      //window.location.reload();
     },
     resetModal() {
       console.log(this.policies);
