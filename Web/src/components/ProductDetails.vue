@@ -34,10 +34,10 @@
                     name="policyFrom"
                     :disabled="'VIEW' === mode"
                     placeholder="Policy from"
-                    :state="isValid(policyFrom)"
+                    :state="isValid(policyFrom) && isPolicyFromValid(policyFrom)"
                   />
-                  <b-form-invalid-feedback :state="isValid(policyFrom)">
-                    Please choose a policyFrom
+                  <b-form-invalid-feedback :state="isValid(policyFrom) && isPolicyFromValid(policyFrom)">
+                    Please choose a policyFrom and policyFrom is not earlier than today
                   </b-form-invalid-feedback>
                 </div>
               </div>
@@ -202,6 +202,7 @@
 </template>
   
   <script>
+import moment from "moment";
 import { HTTP } from "./http/ApiClient";
 
 export default {
@@ -266,6 +267,12 @@ export default {
     },
     isValid(answer) {
       return Boolean(answer);
+    },
+    isPolicyFromValid() {
+      const policyFromDate = moment(this.policyFrom).startOf("day");
+      const today = moment().startOf("day");
+
+      return policyFromDate.isSameOrAfter(today);
     },
     isPolicyRangeValid() {
       // Check if policyTo is not earlier than policyFrom
