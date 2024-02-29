@@ -9,10 +9,10 @@ public class MartenDataStore : IDataStore
 {
     private readonly IDocumentSession session;
 
-    public MartenDataStore(IDocumentSession documentSession, IPolicyAccountRepository policyAccountRepository)
+    public MartenDataStore(IDocumentStore documentStore)
     {
-        this.session = documentSession;
-        PolicyAccounts = policyAccountRepository;
+        session = documentStore.LightweightSession();
+        PolicyAccounts = new MartenPolicyAccountRepository(session);
     }
 
     public IPolicyAccountRepository PolicyAccounts { get; }
@@ -21,8 +21,8 @@ public class MartenDataStore : IDataStore
     {
         try
         {
-            await session.SaveChangesAsync();
 
+            await session.SaveChangesAsync();
         }
         catch (Exception ex)
         {
@@ -32,5 +32,12 @@ public class MartenDataStore : IDataStore
 
     public void Dispose()
     {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (disposing) session.Dispose();
     }
 }
