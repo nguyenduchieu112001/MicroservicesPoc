@@ -1,9 +1,8 @@
+using DashboardService.Domain;
+using Elastic.Clients.Elasticsearch;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DashboardService.Domain;
-using Elastic.Clients.Elasticsearch;
-using Elastic.Clients.Elasticsearch.IndexManagement;
 
 namespace DashboardService.Init;
 
@@ -19,7 +18,7 @@ public class SalesData
     public async Task SeedData()
     {
         var policyIndexExists = await elasticClient.Indices.ExistsAsync("policy_lab_stats");
-        if (policyIndexExists.Exists) await elasticClient.Indices.DeleteAsync(new DeleteIndexRequest("policy_lab_stats"));
+        //if (policyIndexExists.Exists) await elasticClient.Indices.DeleteAsync(new DeleteIndexRequest("policy_lab_stats"));
 
         var salesData = new Dictionary<string, (string Product, int Month, int Policies)[]>
         {
@@ -29,33 +28,33 @@ public class SalesData
         };
 
         foreach (var agentSalesData in salesData)
-        foreach (var (product, month, policies) in agentSalesData.Value)
-        {
-            var startMonth = DateTime.Now.AddMonths(-1 * month);
-
-            for (var index = 0; index < policies; index++)
+            foreach (var (product, month, policies) in agentSalesData.Value)
             {
-                var policy = new PolicyDocument
-                (
-                    Guid.NewGuid().ToString(),
-                    new DateTime(startMonth.Year, startMonth.Month, 1),
-                    new DateTime(startMonth.Year, startMonth.Month, 1).AddYears(1).AddDays(-1),
-                    "Anonymous Mike",
-                    product,
-                    100M,
-                    agentSalesData.Key
-                );
+                var startMonth = DateTime.Now.AddMonths(-1 * month);
 
-                await elasticClient.IndexAsync
-                (
-                    policy,
-                    i => i
-                        .Index("policy_lab_stats")
-                        .Id(policy.Number)
-                        .Refresh(Refresh.True)
-                );
+                for (var index = 0; index < policies; index++)
+                {
+                    var policy = new PolicyDocument
+                    (
+                        Guid.NewGuid().ToString(),
+                        new DateTime(startMonth.Year, startMonth.Month, 1),
+                        new DateTime(startMonth.Year, startMonth.Month, 1).AddYears(1).AddDays(-1),
+                        "Anonymous Mike",
+                        product,
+                        100M,
+                        agentSalesData.Key
+                    );
+
+                    await elasticClient.IndexAsync
+                    (
+                        policy,
+                        i => i
+                            .Index("policy_lab_stats")
+                            .Id(policy.Number)
+                    .Refresh(Refresh.True)
+                    );
+                }
             }
-        }
     }
 
     private static (string Product, int Month, int Policies)[] JimmySalesData()

@@ -22,7 +22,7 @@ public class ElasticPolicyRepository : IPolicyRepository
             i => i
                 .Index("policy_lab_stats")
                 .Id(policy.Number)
-        //.Refresh(Refresh.True)
+        .Refresh(Refresh.True)
         );
 
         if (!response.IsValidResponse) throw new ApplicationException("Failed to index a policy document");
